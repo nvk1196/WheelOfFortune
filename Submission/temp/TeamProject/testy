@@ -1,0 +1,109 @@
+package testy;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+
+public class testy extends JFrame implements ActionListener
+{
+    private Timer timer;
+    Graphics2D g2;
+
+  private JPanel contentPane;
+  static double rot = 0.0;
+  JLabel lblNewLabel;
+
+  /**
+   * Launch the application.
+   */
+  public static void main(String[] args)
+  {
+    EventQueue.invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        try
+        {
+          testy frame = new testy();
+          frame.setVisible(true);
+        } catch (Exception e)
+        {
+          e.printStackTrace();
+        }
+      }
+    });
+  }
+
+  /**
+   * Create the frame.
+   */
+  public testy()
+  {
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setBounds(100, 100, 550, 600);
+    contentPane = new JPanel();
+    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+    setContentPane(contentPane);
+    
+    ImageIcon icon = new ImageIcon("WheelOfFortune.png"); // has image path
+    contentPane.setLayout(null);
+    lblNewLabel = new JLabel() {
+      @Override
+      protected void paintComponent(Graphics g) {
+        
+          g2 = (Graphics2D) g;
+          g2.rotate(rot, icon.getIconWidth() / 2, icon.getIconHeight() / 2);
+          g2.drawImage(icon.getImage(), 0, 0, null);
+          rot += Math.PI / 300;
+          
+          lblNewLabel.repaint(); 
+      }
+  };
+    lblNewLabel.setIcon(icon);
+    lblNewLabel.setBounds(125, 144, 338, 271);
+    getContentPane().add(lblNewLabel);
+    
+    
+    JButton btnSpin = new JButton("Spin");
+    btnSpin.setBounds(5, 533, 524, 23);
+    contentPane.add(btnSpin);
+    btnSpin.addActionListener(new ActionListener()
+    {
+    
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+    	  lblNewLabel.setVisible(false);
+    	  JLabel lbl = new JLabel();
+    	  lbl.setIcon(icon);
+    	   lbl.setBounds(125,125,338, 290);
+    	    getContentPane().add(lbl);
+        }
+    });
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
+  
+  
+  
+
+    }    
+
